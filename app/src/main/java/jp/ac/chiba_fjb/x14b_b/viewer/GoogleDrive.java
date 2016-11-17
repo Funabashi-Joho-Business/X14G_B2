@@ -87,6 +87,13 @@ public class GoogleDrive extends GoogleAccount {
             return null;
         }
     }
+    public FileList getFolderList(String id){
+        try {
+            return mDrive.files().list().setQ(String.format("'%s' in parents and mimeType = 'application/vnd.google-apps.folder'",id)).execute();
+        } catch (IOException e) {
+            return null;
+        }
+    }
     public String getFolderId(String parent,String name){
         try {
             FileList list = mDrive.files().list().setQ(String.format("'%s' in parents and name='%s'", parent, name)).execute();
