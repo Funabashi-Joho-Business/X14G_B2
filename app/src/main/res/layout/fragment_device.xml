@@ -2,12 +2,20 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context="jp.ac.chiba_fjb.x14b_b.viewer.DeviceFragment">
+             tools:context="jp.ac.chiba_fjb.x14b_b.viewer.Device.DeviceFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="ああああ\nいいいい"/>
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/deviceView"
+            tools:listitem="@layout/device_item"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
 
 </FrameLayout>

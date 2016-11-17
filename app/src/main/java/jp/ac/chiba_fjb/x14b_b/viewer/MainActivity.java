@@ -3,7 +3,6 @@ package jp.ac.chiba_fjb.x14b_b.viewer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -13,12 +12,23 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import jp.ac.chiba_fjb.x14b_b.viewer.Device.DeviceFragment;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    GoogleDrive mDrive;
+    public GoogleDrive getDrive(){
+        return mDrive;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mDrive = new GoogleDrive(this);
+        mDrive.connect();
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -85,10 +95,9 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_manage) {
 
-        } else if (id == R.id.nav_share) {
+        }  else if (id == R.id.account_remove) {
 
-        } else if (id == R.id.nav_send) {
-
+            mDrive.resetAccount();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -99,10 +108,10 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        for(Fragment f : getSupportFragmentManager().getFragments())
-            f. onActivityResult(requestCode, resultCode, data);
+//        for(Fragment f : getSupportFragmentManager().getFragments())
+//            f. onActivityResult(requestCode, resultCode, data);
 
-
+        mDrive.onActivityResult(requestCode,resultCode,data);
         super.onActivityResult(requestCode, resultCode, data);
     }
 }

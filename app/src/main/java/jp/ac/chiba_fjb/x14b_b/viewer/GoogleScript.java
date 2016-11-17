@@ -42,7 +42,7 @@ public class GoogleScript extends GoogleAccount
 		return new HttpRequestInitializer() {
 			@Override
 			public void initialize(HttpRequest httpRequest)
-					throws IOException {
+				throws java.io.IOException {
 				requestInitializer.initialize(httpRequest);
 				httpRequest.setReadTimeout(380000);
 			}
@@ -68,32 +68,29 @@ public class GoogleScript extends GoogleAccount
 		call();
 	}
 
-	protected void onExec(){
+	protected void onExec() throws IOException {
 		HttpTransport transport = AndroidHttp.newCompatibleTransport();
 		JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
 		mService = new Script.Builder(
-				transport, jsonFactory, setHttpTimeout(getCredential()))
-				.setApplicationName("Google Apps Script Execution API")
-				.build();
+			                             transport, jsonFactory, setHttpTimeout(getCredential()))
+			           .setApplicationName("Google Apps Script Execution API")
+			           .build();
 
 		for(final ScriptInfo info : mScripts) {
 			ExecutionRequest request = new ExecutionRequest().setFunction(info.functionName);
 			if (info.params != null)
 				request.setParameters(info.params);
 
-			try {
-				final Operation op = mService.scripts().run(info.scriptId, request).execute();
-				if (info.listener != null) {
-					mContext.runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							info.listener.onExecuted(GoogleScript.this, op);
-						}
-					});
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
+			final Operation op = mService.scripts().run(info.scriptId, request).execute();
+			if (info.listener != null) {
+				mContext.runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						info.listener.onExecuted(GoogleScript.this, op);
+					}
+				});
 			}
+
 		}
 		mScripts.clear();
 	}

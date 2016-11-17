@@ -41,4 +41,8 @@ dependencies {
     }
     compile 'com.google.android.gms:play-services-auth:9.4.0'
 
+    compile 'com.google.http-client:google-http-client-gson:1.22.0'
+    compile 'com.google.apis:google-api-services-drive:v3-rev45-1.22.0'
+
+    compile 'com.android.support:recyclerview-v7:25.0.1'
 }

@@ -20,16 +20,16 @@
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-        <FrameLayout
-            tools:showIn="@layout/app_bar_main"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/fragment_area">
 
-        </FrameLayout>
 
     </android.support.design.widget.AppBarLayout>
 
+    <FrameLayout
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/fragment_area">
 
+    </FrameLayout>
 
 </android.support.design.widget.CoordinatorLayout>

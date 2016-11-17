@@ -54,6 +54,8 @@ public class GoogleAccount {
         editor.putString(PREF_ACCOUNT_NAME, null);
         editor.apply();
         mAccountName = null;
+       // mCredential.setSelectedAccountName(null);
+        mCredential.setSelectedAccount(null);
     }
     public void requestAccount(){
         //ユーザ選択
