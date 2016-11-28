@@ -16,8 +16,8 @@ import jp.ac.chiba_fjb.x14b_b.viewer.Device.DeviceFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
-    GoogleDrive mDrive;
+    private Permission mPermission;
+    private GoogleDrive mDrive;
     public GoogleDrive getDrive(){
         return mDrive;
     }
@@ -43,10 +43,23 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.fragment_area,new DeviceFragment(),DeviceFragment.class.getName());
-        ft.addToBackStack(null);
-        ft.commit();
+        //Android6以降用、ランタイムパーミッション設定
+        mPermission = new Permission();
+        mPermission.setOnResultListener(new Permission.ResultListener() {
+            @Override
+            public void onResult() {
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.fragment_area,new DeviceFragment(),DeviceFragment.class.getName());
+                ft.commitAllowingStateLoss();
+            }
+        });
+        mPermission.requestPermissions(this);
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        mPermission.onRequestPermissionsResult(requestCode,permissions,grantResults);
     }
 
     @Override
